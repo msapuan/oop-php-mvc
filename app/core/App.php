@@ -10,7 +10,9 @@
     public function parseURL()
     {
       if(isset($_GET['url'])) {
-        $url = $_GET['url'];
+        $url = rtrim($_GET['url'], '/'); // hapus / di akhir url
+        $url = filter_var($url, FILTER_SANITIZE_URL); // bersihkan url dari karakter rentan
+        $url = explode('/', $url); // pecah/bagi url kedalam array
         return $url;
       }
     }
