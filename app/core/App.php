@@ -1,6 +1,11 @@
 <?php
 
   class App {
+    // property untuk menentukan controller, method, parameter DEFAULT
+    protected $controller = 'Home';
+    protected $method = 'index';
+    protected $params = [];
+
     public function __construct()
     {
       $url = $this->parseURL();
