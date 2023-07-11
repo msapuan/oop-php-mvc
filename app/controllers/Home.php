@@ -1,9 +1,9 @@
 <?php
 
-  class Home {
+  class Home extends Controller {
     // buat method DEFAULT
     public function index()
     {
-      echo 'home/index';
+      $this->view('home/index');
     }
   }
