@@ -9,12 +9,32 @@
     public function __construct()
     {
       $url = $this->parseURL();
-      var_dump($url);
+      
+      // cek apakah ada file didalam Home.php didalam folder controller
+      // controller
+      if( file_exists('./app/controllers/' . $url[0] . '.php' ) ) {
+        // timpa menjadi controller baru
+        $this->controller = $url[0];
+        // hilangkan controller dari elemen array
+        unset($url[0]);
+      }
+
+      // panggil controller
+      require_once './app/controllers/' . $this->controller . '.php';
+      // Class di instance supaya bisa manggil method
+      $this->controller = new $this->controller;
+
+      // method
+      if( isset($url[1]) ) {
+        if( method_exists($this->controller, $url[1]) ) {
+          
+        }
+      }
     }
 
     public function parseURL()
     {
-      if(isset($_GET['url'])) {
+      if( isset($_GET['url']) ) {
         $url = rtrim($_GET['url'], '/'); // hapus / di akhir url
         $url = filter_var($url, FILTER_SANITIZE_URL); // bersihkan url dari karakter rentan
         $url = explode('/', $url); // pecah/bagi url kedalam array
