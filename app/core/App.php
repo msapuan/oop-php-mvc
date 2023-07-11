@@ -12,7 +12,7 @@
       
       // cek apakah ada file didalam Home.php didalam folder controller
       // controller
-      if( file_exists('./app/controllers/' . $url[0] . '.php' ) ) {
+      if( file_exists('../app/controllers/' . $url[0] . '.php' ) ) {
         // timpa menjadi controller baru
         $this->controller = $url[0];
         // hilangkan controller dari elemen array
@@ -20,16 +20,26 @@
       }
 
       // panggil controller
-      require_once './app/controllers/' . $this->controller . '.php';
+      require_once '../app/controllers/' . $this->controller . '.php';
       // Class di instance supaya bisa manggil method
       $this->controller = new $this->controller;
 
       // method
       if( isset($url[1]) ) {
         if( method_exists($this->controller, $url[1]) ) {
-          
+          $this->method = $url[1];
+          unset($url[1]);
         }
       }
+
+      // params (kelola parameter)
+      if( !empty($url) ) {
+        $this->params = array_values($url);
+      }
+
+      // jalankan controller & method serta kirimkan params jika ada
+      call_user_func_array([$this->controller, $this->method], $this->params);
+
     }
 
     public function parseURL()
