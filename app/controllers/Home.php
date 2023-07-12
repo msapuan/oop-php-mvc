@@ -4,7 +4,8 @@
     // buat method DEFAULT
     public function index()
     {
-      $this->view('templates/header');
+      $data['judul'] = 'Home';
+      $this->view('templates/header', $data);
       $this->view('home/index');
       $this->view('templates/footer');
     }
